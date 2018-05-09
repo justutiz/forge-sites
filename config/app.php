@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -52,4 +51,29 @@ return [
         App\Providers\AppServiceProvider::class,
     ],
 
+    /**
+     * Laravel forge API token.
+     *
+     * Visit https://forge.laravel.com/user/profile#/api to get one.
+     */
+    'api_token' => env('API_TOKEN', null),
+
+    /**
+     * Headers remove from table.
+     *
+     * All haders can be found on https://forge.laravel.com/api-documentation#get-site
+     */
+    'except' => [
+        'id',
+        'status',
+        'repository_provider',
+        'repository_status',
+        'deployment_status',
+        'created_at',
+        'project_type',
+        'app_status',
+        'app',
+        'hipchat_room',
+        'wildcards',
+    ],
 ];

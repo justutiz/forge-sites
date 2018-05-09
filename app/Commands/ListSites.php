@@ -2,7 +2,9 @@
 
 namespace App\Commands;
 
-use Illuminate\Console\Scheduling\Schedule;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Exception\ClientException;
 use LaravelZero\Framework\Commands\Command;
 
 class ListSites extends Command
@@ -19,7 +21,34 @@ class ListSites extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'List all sites from forge.laravel.com';
+
+    /**
+     * Forge response codes.
+     *
+     * https://forge.laravel.com/api-documentation#errors
+     *
+     * @var array
+     */
+    protected $responseCodes = [
+        200 => 'Everything is ok.',
+        400 => 'Valid data was given but the request has failed.',
+        401 => 'No valid API Key was given.',
+        404 => 'The request resource could not be found.',
+        422 => 'The payload has missing required parameters or invalid data was given.',
+        429 => 'Too many attempts.',
+        500 => 'Request failed due to an internal error in Forge.',
+        503 => 'Forge is offline for maintenance.',
+    ];
+
+    protected $except;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->except = config('app.except');
+    }
 
     /**
      * Execute the console command.
@@ -28,18 +57,59 @@ class ListSites extends Command
      */
     public function handle(): void
     {
-        //
+        $servers = $this->getServers()->pluck('id');
+        $bar     = $this->output->createProgressBar(count($servers));
+
+        $sites = $servers->map(function ($serverId) use ($bar) {
+            $bar->advance();
+
+            return $this->getSites($serverId);
+        })->flatten(1);
+
+        $bar->finish();
+        $this->info(' Done!');
+
+        $headers = array_keys(collect($sites->first())
+                        ->except($this->except)
+                        ->toArray());
+
+        $sites = $sites->map(function ($site) {
+            return collect($site)->except($this->except);
+        });
+
+        $this->table($headers, $sites->toArray());
     }
 
-    /**
-     * Define the command's schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
-     *
-     * @return void
-     */
-    public function schedule(Schedule $schedule): void
+    private function getServers()
     {
-        // $schedule->command(static::class)->everyMinute();
+        $response = $this->request('servers');
+
+        return collect(json_decode($response->getBody()->getContents(), true)['servers']);
+    }
+
+    private function getSites(int $serverId)
+    {
+        $response = $this->request("servers/{$serverId}/sites");
+
+        return collect(json_decode($response->getBody()->getContents(), true)['sites']);
+    }
+
+    private function request(string $url): Response
+    {
+        try {
+            $client = new Client(['base_uri' => 'https://forge.laravel.com/api/v1/']);
+
+            return $client->get($url, [
+                    'headers' => [
+                        'Authorization'  => 'Bearer ' . config('app.api_token'),
+                        'Accept'         => 'application/json',
+                        'Content-Type'   => 'application/json',
+                    ],
+                ]);
+        } catch (ClientException $e) {
+            echo PHP_EOL;
+            $this->error($this->error($this->responseCodes[$e->getCode()] ?? $e->getCode()));
+            exit;
+        }
     }
 }
