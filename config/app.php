@@ -11,7 +11,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-    'name' => 'Artisan',
+    'name' => 'Forge Sites',
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ return [
     | services your application utilizes. Should be true in production.
     |
     */
-    'production' => false,
+    'production' => true,
 
     /*
     |--------------------------------------------------------------------------
