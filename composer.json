@@ -1,13 +1,13 @@
 {
-    "name": "laravel-zero/laravel-zero",
-    "description": "The Laravel Zero Framework.",
-    "keywords": ["framework", "laravel", "laravel zero", "console", "cli"],
+    "name": "justutiz/forge-sites",
+    "description": "List all your sites hosted on Laravel Forge.",
+    "keywords": ["framework", "laravel", "laravel zero", "console", "cli", "forge", "justutiz"],
     "homepage": "https://laravel-zero.com",
     "type": "project",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/laravel-zero/laravel-zero/issues",
-        "source": "https://github.com/laravel-zero/laravel-zero"
+        "issues": "https://github.com/justutiz/forge-sites/issues",
+        "source": "https://github.com/justutiz/forge-sites"
     },
     "authors": [
         {
