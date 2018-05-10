@@ -11,6 +11,10 @@
     },
     "authors": [
         {
+            "name": "Justas Maziliauskas",
+            "email": "justutiz@gmail.com"
+        },
+        {
             "name": "Nuno Maduro",
             "email": "enunomaduro@gmail.com"
         }
