@@ -12,7 +12,7 @@ return [
     | You cannot pass arguments to the default command because they are ignored.
     |
     */
-    'default' => NunoMaduro\LaravelConsoleSummary\SummaryCommand::class,
+    'default' => \App\Commands\ListSitesCommand::class,
 
     /*
     |--------------------------------------------------------------------------
