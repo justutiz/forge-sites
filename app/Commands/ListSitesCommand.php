@@ -7,14 +7,14 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Exception\ClientException;
 use LaravelZero\Framework\Commands\Command;
 
-class ListSites extends Command
+class ListSitesCommand extends Command
 {
     /**
      * The signature of the command.
      *
      * @var string
      */
-    protected $signature = 'sites';
+    protected $signature = 'list-sites';
 
     /**
      * The description of the command.
@@ -26,7 +26,7 @@ class ListSites extends Command
     /**
      * Forge response codes.
      *
-     * https://forge.laravel.com/api-documentation#errors
+     * @see https://forge.laravel.com/api-documentation#errors
      *
      * @var array
      */
