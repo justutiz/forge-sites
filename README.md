@@ -34,7 +34,7 @@ You can change table columns in `app.php`.
 # Usage
 
 ```bash
-php forge-sites
+php artisan sites
 ```
 
 ## License
