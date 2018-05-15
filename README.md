@@ -40,3 +40,8 @@ php artisan sites
 ## License
 
 Forge Sites is an open-sourced software licensed under the [MIT license](LICENSE.md).
+
+# Todo
+- Deploy Now from command line
+- Get Deployment Log
+- Reboot server
