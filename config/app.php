@@ -75,5 +75,6 @@ return [
         'app',
         'hipchat_room',
         'wildcards',
+        'deployment_url',
     ],
 ];
