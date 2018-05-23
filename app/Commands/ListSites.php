@@ -74,6 +74,8 @@ class ListSites extends Command
                         ->toArray());
 
         $sites = $sites->map(function ($site) {
+            $site['forge_site_url'] = str_before($site['deployment_url'], '/deploy');
+
             return collect($site)->except($this->except);
         });
 

@@ -61,7 +61,10 @@ return [
     /**
      * Headers remove from table.
      *
-     * All haders can be found on https://forge.laravel.com/api-documentation#get-site
+     * Available headers:
+     * name, directory, wildcards, status, repository, repository_provider, repository_branch,
+     * repository_status, quick_deploy, deployment_status, project_type, app, app_status,
+     * hipchat_room, slack_channel, created_at, deployment_url, forge_site_url
      */
     'except' => [
         'id',
