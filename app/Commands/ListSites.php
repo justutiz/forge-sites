@@ -69,15 +69,15 @@ class ListSites extends Command
         $bar->finish();
         $this->info(' Done!');
 
-        $headers = array_keys(collect($sites->first())
-                        ->except($this->except)
-                        ->toArray());
-
         $sites = $sites->map(function ($site) {
             $site['forge_site_url'] = str_before($site['deployment_url'], '/deploy');
 
             return collect($site)->except($this->except);
         });
+
+        $headers = array_keys(collect($sites->first())
+                        ->except($this->except)
+                        ->toArray());
 
         $this->table($headers, $sites->toArray());
     }
